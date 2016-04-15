@@ -12,7 +12,7 @@ typedef void (^ItemActionBlock)(void);
 
 @interface HMSideMenuItem : UIView
 
-@property (nonatomic, strong) ItemActionBlock action;
+@property (nonatomic, copy) ItemActionBlock action;
 
 - (id)initWithSize:(CGSize)size action:(ItemActionBlock)action;
 

@@ -49,20 +49,47 @@ typedef CGFloat (^EasingFunction)(CGFloat, CGFloat, CGFloat, CGFloat);
     }
 }
 
+
 - (void)open {
+    [self openWithCompletion:nil];
+}
+
+- (void)close {
+    [self closeWithCompletion:nil];
+}
+
+- (void)openWithCompletion:(void (^)())completion {
     _isOpen = YES;
     
     for (HMSideMenuItem *item in self.items) {
         [self performSelector:@selector(showItem:) withObject:item afterDelay:kAnimationDelay * [self.items indexOfObject:item]];
     }
+    
+    if (completion)
+    {
+        [self performSelector:@selector(fireBlock:)
+                   withObject:completion
+                   afterDelay:(kAnimationDelay * self.items.count + self.animationDuration)];
+    }
 }
 
-- (void)close {
+- (void)closeWithCompletion:(void (^)())completion {
     _isOpen = NO;
     
     for (HMSideMenuItem *item in self.items) {
         [self performSelector:@selector(hideItem:) withObject:item afterDelay:kAnimationDelay * [self.items indexOfObject:item]];
     }
+    
+    if (completion)
+    {
+        [self performSelector:@selector(fireBlock:)
+                   withObject:completion
+                   afterDelay:(kAnimationDelay * self.items.count + self.animationDuration)];
+    }
+}
+
+- (void) fireBlock:(void (^)())completion {
+    completion();
 }
 
 - (void)showItem:(HMSideMenuItem *)item {

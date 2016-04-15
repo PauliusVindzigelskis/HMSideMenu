@@ -25,7 +25,10 @@
 }
 
 - (void)didTapView:(UITapGestureRecognizer *)gesture {
-    self.action();
+    if (self.action)
+    {
+        self.action();
+    }
 }
 
 @end

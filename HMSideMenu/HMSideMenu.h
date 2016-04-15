@@ -44,7 +44,11 @@ typedef enum {
 @property (nonatomic, assign) HMSideMenuPosition menuPosition;
 
 - (id)initWithItems:(NSArray *)items;
+
 - (void)open;
 - (void)close;
+
+- (void)openWithCompletion:(void (^)())completion;
+- (void)closeWithCompletion:(void (^)())completion;
 
 @end
